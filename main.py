@@ -1,6 +1,5 @@
 import discord
 import requests
-import json
 import os
 import random
 
