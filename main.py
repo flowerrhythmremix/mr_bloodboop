@@ -35,8 +35,29 @@ async def on_message(message):
       request = requests.get(url, params=payload, headers=headers)
 
       if ticker == 'DOGE':
-        ticker = ':doge:'
+        ticker = '<:doge:804544921955467275>'
 
       await message.channel.send("CRYPTO: " + ticker + " is currently trading at $" + str(request.json()['USD']))
+
+    if message.content.startswith('$'):
+      ticker = message.content[1:].upper()
+
+      url = "https://www.alphavantage.co/query"
+
+      payload = {
+        'function': 'TIME_SERIES_INTRADAY',
+        'symbol': ticker,
+        'interval': '1min',
+        'apikey': os.getenv('ALPHA_VANTAGE_KEY')
+      }
+
+      request = requests.get(url, params=payload)
+
+      response = request.json()['Time Series (1min)']
+      for key, value in response.items():
+        price = value['4. close']
+        break
+
+      await message.channel.send("STONK: " + ticker + " is currently trading at $" + str(price))
       
 client.run(os.getenv('TOKEN'))
