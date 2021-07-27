@@ -59,5 +59,8 @@ async def on_message(message):
         break
 
       await message.channel.send("STONK: " + ticker + " is currently trading at $" + str(price))
+
+    if 'twitter' in message.content()
+      await message.content.replace('twitter', 'fxtwitter')
       
 client.run(os.getenv('TOKEN'))
